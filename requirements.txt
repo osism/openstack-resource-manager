@@ -1,0 +1,9 @@
+openstacksdk
+os-client-config
+oslo.config
+python-cinderclient
+python-glanceclient
+python-heatclient
+python-keystoneclient
+python-neutronclient
+python-novaclient
