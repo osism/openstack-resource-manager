@@ -83,7 +83,7 @@ check("neutron", "securitygroup", clients["neutron"].list_security_groups()["sec
 check("neutron", "securitygrouprule", clients["neutron"].list_security_group_rules()["security_group_rules"], projects)
 
 check("glance", "image", clients["glance"].images.list(), projects)
-for image in [image for image in clients["glance"].images.list() if image.visibility == "shared"]:
+for image in [image for image in clients["glance"].images.list() if "visibility" in image and image.visibility == "shared"]:
     check("glance", "imagemember", clients["glance"].image_members.list(image.id), projects)
 
 check("cinder", "volume", clients["cinder"].volumes.list(search_opts={"all_tenants": True}), projects)
