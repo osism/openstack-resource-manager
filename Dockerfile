@@ -13,4 +13,4 @@ RUN apk add --no-cache --virtual .build-deps \
     && rm /requirements.txt \
     && apk del .build-deps
 
-CMD ["python3", "/usr/local/bin/list.py", "--debug"]
+CMD ["python3", "/usr/local/bin/list.py"]
