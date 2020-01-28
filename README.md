@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/betacloud/orphaned-resources.svg?branch=master)](https://travis-ci.org/betacloud/orphaned-resources)
+[![Build Status](https://travis-ci.org/betacloud/openstack-orphaned-resources.svg?branch=master)](https://travis-ci.org/betacloud/openstack-orphaned-resources)
 
 With this script it is possible to easily list orphaned resources
 on an OpenStack cloud environment.
