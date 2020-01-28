@@ -1,0 +1,9 @@
+---
+version: "3"
+services:
+  list:
+    container_name: list-openstack-orphaned-resources
+    build: .
+    volumes:
+      - ./clouds.yml:/etc/openstack/clouds.yml:ro
+      - ./secure.yml:/etc/openstack/secure.yml:ro

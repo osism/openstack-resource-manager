@@ -11,6 +11,10 @@ $ pipenv shell
 $ python src/list.py
 ```
 
+```
+$ docker-compose up --build list
+```
+
 # License
 
 Licensed under the Apache License, Version 2.0 (the "License");
