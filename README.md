@@ -1,9 +1,11 @@
+# openstack-orphaned-resources
+
 [![Build Status](https://travis-ci.org/betacloud/openstack-orphaned-resources.svg?branch=master)](https://travis-ci.org/betacloud/openstack-orphaned-resources)
 
 With this script it is possible to easily list orphaned resources
 on an OpenStack cloud environment.
 
-# Usage 
+## Usage
 
 ```
 $ pipenv install
@@ -15,7 +17,7 @@ $ python src/list.py
 $ docker-compose up --build list
 ```
 
-# Sample output
+## Sample output
 
 ```
 neutron - rbacpolicy: 325ed31d-f72e-4d50-a889-cc8c3e7e7cc2 (project: de8299637be6486f9dd0d51c1f544a71)
@@ -32,7 +34,7 @@ neutron - securitygroup: 1161f267-384f-4e42-855b-4093c014cd49 (project: 6c1e4062
 [...]
 ```
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
