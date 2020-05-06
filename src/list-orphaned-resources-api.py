@@ -4,7 +4,7 @@ import sys
 from oslo_config import cfg
 import os_client_config
 
-PROJECT_NAME = 'orphaned-resources'
+PROJECT_NAME = 'list-orphaned-resources-api'
 CONF = cfg.CONF
 opts = [
     cfg.BoolOpt('debug', help='Enable debug logging', default=False),
