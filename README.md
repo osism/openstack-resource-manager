@@ -1,7 +1,5 @@
 # openstack-resource-manager
 
-[![Build Status](https://travis-ci.org/betacloud/openstack-resource-manager.svg?branch=master)](https://travis-ci.org/betacloud/openstack-resource-manager)
-
 With this script it is possible to easily list orphaned resources
 on an OpenStack cloud environment.
 
@@ -33,15 +31,3 @@ neutron - securitygroup: 0677f688-af65-4001-b4a0-07f5002c382c (project: d747d2e1
 neutron - securitygroup: 1161f267-384f-4e42-855b-4093c014cd49 (project: 6c1e40626cd44340a8094d4e23c9260b)
 [...]
 ```
-
-## License
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
