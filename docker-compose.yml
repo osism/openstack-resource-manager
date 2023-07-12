@@ -2,7 +2,7 @@
 version: "3"
 services:
   list:
-    container_name: list-openstack-orphaned-resources
+    container_name: openstack-resource-manager
     build: .
     volumes:
       - ./clouds.yml:/etc/openstack/clouds.yml:ro
