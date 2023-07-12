@@ -1,6 +1,6 @@
 # openstack-resource-manager
 
-With this script it is possible to easily list orphaned resources
+With this tool it is possible to easily list orphaned resources
 on an OpenStack cloud environment.
 
 ## Usage
