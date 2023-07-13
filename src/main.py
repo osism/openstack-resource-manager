@@ -1,10 +1,10 @@
-import logging
 import sys
 
+from loguru import logger
 from oslo_config import cfg
 import os_client_config
 
-PROJECT_NAME = "list-orphaned-resources-api"
+PROJECT_NAME = "openstack-resource-manager"
 CONF = cfg.CONF
 opts = [
     cfg.BoolOpt("debug", help="Enable debug logging", default=False),
@@ -14,12 +14,17 @@ CONF.register_cli_opts(opts)
 CONF(sys.argv[1:], project=PROJECT_NAME)
 
 if CONF.debug:
-    level = logging.DEBUG
+    level = "DEBUG"
 else:
-    level = logging.INFO
-logging.basicConfig(
-    format="%(asctime)s - %(message)s", level=level, datefmt="%Y-%m-%d %H:%M:%S"
+    level = "INFO"
+
+log_fmt = (
+    "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | "
+    "<level>{message}</level>"
 )
+
+logger.remove()
+logger.add(sys.stderr, format=log_fmt, level=level, colorize=True)
 
 
 def check(servicename, resourcename, resources, projects):
@@ -38,8 +43,8 @@ def check(servicename, resourcename, resources, projects):
             else:
                 project_id = resource.get("project_id")
         except Exception:
-            logging.error("%s resource %s not supported" % (servicename, resourcename))
-            logging.debug(dir(resource))
+            logger.error("%s resource %s not supported" % (servicename, resourcename))
+            logger.debug(dir(resource))
             project_id = None
 
         if hasattr(resource, "id"):
