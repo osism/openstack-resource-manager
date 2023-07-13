@@ -47,7 +47,7 @@ def wait_for_amphora_boot(loadbalancer_id):
 
     while i:
         amphorae = cloud.load_balancer.amphorae(
-            loadbalancer_id=amphora.loadbalancer_id, status="BOOTING"
+            loadbalancer_id=loadbalancer_id, status="BOOTING"
         )
         if not [1 for x in amphorae]:
             break
@@ -66,7 +66,7 @@ def wait_for_amphora_delete(loadbalancer_id):
 
     while i:
         amphorae = cloud.load_balancer.amphorae(
-            loadbalancer_id=amphora.loadbalancer_id, status="PENDING_DELETE"
+            loadbalancer_id=loadbalancer_id, status="PENDING_DELETE"
         )
         if not [1 for x in amphorae]:
             break
@@ -74,14 +74,10 @@ def wait_for_amphora_delete(loadbalancer_id):
         sleep(SLEEP_WAIT_FOR_AMPHORA_DELETE)
 
 
-# Connect to the OpenStack environment
-cloud = openstack.connect(cloud=CONF.cloud)
-
-# Restore all amphorae in state ERROR
-if CONF.restore:
+def restore():
     for amphora in cloud.load_balancer.amphorae(status="ERROR"):
         logger.info(
-            f"Amphora {amphora.id} of loadbalancer {amphora.loadbalancer_id} is in state ERROR, trigger failover"
+            f"Amphora {amphora.id} of loadbalancer {amphora.loadbalancer_id} is in state ERROR, trigger amphora failover"
         )
         cloud.load_balancer.failover_amphora(amphora.id)
         sleep(10)  # wait for the octavia API
@@ -89,13 +85,36 @@ if CONF.restore:
         wait_for_amphora_boot(amphora.loadbalancer_id)
         wait_for_amphora_delete(amphora.loadbalancer_id)
 
+
+def rotate():
+    done = []
+    for amphora in cloud.load_balancer.amphorae(status="ALLOCATED"):
+        if amphora.loadbalancer_id in done:
+            next
+
+        logger.info(
+            f"Amphora {amphora.id} of loadbalancer {amphora.loadbalancer_id} is rotated by a loadbalancer failover"
+        )
+
+        try:
+            cloud.load_balancer.failover_load_balancer(amphora.loadbalancer_id)
+            sleep(10)  # wait for the octavia API
+
+            done.append(amphora.loadbalancer_id)
+
+            wait_for_amphora_boot(amphora.loadbalancer_id)
+            wait_for_amphora_delete(amphora.loadbalancer_id)
+        except openstack.exceptions.ConflictException:
+            pass
+
+
+# Connect to the OpenStack environment
+cloud = openstack.connect(cloud=CONF.cloud)
+
+# Restore all amphorae in state ERROR
+if CONF.restore:
+    restore()
+
 # Rotate all amphorae
 if CONF.rotate:
-    for amphora in cloud.load_balancer.amphorae(status="ALLOCATED"):
-        logger.info(f"Amphora {amphora.id} is rotated by a failover")
-
-        cloud.load_balancer.failover_amphora(amphora.id)
-        sleep(10)  # wait for the octavia API
-
-        wait_for_amphora_boot(amphora.loadbalancer_id)
-        wait_for_amphora_delete(amphora.loadbalancer_id)
+    rotate()
