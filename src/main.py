@@ -1,8 +1,9 @@
 import sys
 
 from loguru import logger
+import openstack
 from oslo_config import cfg
-import os_client_config
+from tabulate import tabulate
 
 PROJECT_NAME = "openstack-resource-manager"
 CONF = cfg.CONF
@@ -28,6 +29,9 @@ logger.add(sys.stderr, format=log_fmt, level=level, colorize=True)
 
 
 def check(servicename, resourcename, resources, projects):
+    result = []
+
+    logger.info(f"Checking {servicename} / {resourcename}")
     for resource in resources:
         try:
             if hasattr(resource, "tenant_id"):
@@ -49,113 +53,109 @@ def check(servicename, resourcename, resources, projects):
 
         if hasattr(resource, "id"):
             resource_id = resource.id
+        elif resourcename == "imagemember":
+            resource_id = resource.get("member_id")
         else:
             resource_id = resource.get("id")
 
-        if resourcename == "imagemember":
-            resource_id = "image_id: %s, member_id: %s" % (
-                resource.get("image_id"),
-                resource.get("member_id"),
-            )
+        logger.debug(f"Checking {resource_id}")
 
-        if project_id and project_id not in projects:
-            print(
-                "%s - %s: %s (project: %s)"
-                % (servicename, resourcename, resource_id, project_id)
-            )
-
-        if (
+        if (project_id and project_id not in projects) or (
             resourcename == "rbacpolicy"
             and resource.get("target_tenant") not in projects
         ):
-            print(
-                "%s - %s: %s (project: %s)"
-                % (servicename, resourcename, resource_id, project_id)
+            result.append([servicename, resourcename, resource_id, project_id])
+            logger.debug(
+                f"{servicename} - {resourcename}: {resource_id} (project: {project_id})"
             )
 
+    return result
 
-keystone = os_client_config.make_client("identity", cloud=CONF.cloud)
-clients = {
-    "cinder": os_client_config.make_client("volume", cloud=CONF.cloud),
-    "glance": os_client_config.make_client("image", cloud=CONF.cloud),
-    "neutron": os_client_config.make_client("network", cloud=CONF.cloud),
-    "nova": os_client_config.make_client("compute", cloud=CONF.cloud),
-    "heat": os_client_config.make_client("orchestration", cloud=CONF.cloud),
-}
 
-domains = [x for x in keystone.domains.list() if x.name != "heat_user_domain"]
+# Connect to the OpenStack environment
+cloud = openstack.connect(cloud=CONF.cloud)
+
+domains = [x for x in cloud.list_domains() if x.name != "heat_user_domain"]
 
 projects = []
 for domain in domains:
-    projects_in_domain = [x.id for x in keystone.projects.list(domain=domain.id)]
+    projects_in_domain = [x.id for x in cloud.list_projects(domain_id=domain.id)]
     projects = projects + projects_in_domain
 
-check(
+result = []
+
+result += check(
     "nova",
     "server",
-    clients["nova"].servers.list(search_opts={"all_tenants": True}),
+    cloud.compute.servers(all_projects=True),
     projects,
 )
 
-check("neutron", "port", clients["neutron"].list_ports()["ports"], projects)
-check("neutron", "router", clients["neutron"].list_routers()["routers"], projects)
-check("neutron", "network", clients["neutron"].list_networks()["networks"], projects)
-check("neutron", "subnet", clients["neutron"].list_subnets()["subnets"], projects)
-check(
+result += check("neutron", "port", cloud.network.ports(), projects)
+result += check("neutron", "router", cloud.network.routers(), projects)
+result += check("neutron", "network", cloud.network.networks(), projects)
+result += check("neutron", "subnet", cloud.network.subnets(), projects)
+result += check(
     "neutron",
     "floatingip",
-    clients["neutron"].list_floatingips()["floatingips"],
+    cloud.network.ips(),
     projects,
 )
-check(
+result += check(
     "neutron",
     "rbacpolicy",
-    clients["neutron"].list_rbac_policies()["rbac_policies"],
+    cloud.network.rbac_policies(),
     projects,
 )
-check(
+result += check(
     "neutron",
     "securitygroup",
-    clients["neutron"].list_security_groups()["security_groups"],
+    cloud.network.security_groups(),
     projects,
 )
-check(
+result += check(
     "neutron",
     "securitygrouprule",
-    clients["neutron"].list_security_group_rules()["security_group_rules"],
+    cloud.network.security_group_rules(),
     projects,
 )
 
-check("glance", "image", clients["glance"].images.list(), projects)
+result += check("glance", "image", cloud.image.images(), projects)
 for image in [
     image
-    for image in clients["glance"].images.list()
+    for image in cloud.image.images()
     if "visibility" in image and image.visibility == "shared"
 ]:
-    check(
+    result += check(
         "glance",
         "imagemember",
-        clients["glance"].image_members.list(image.id),
+        cloud.image.members(image.id),
         projects,
     )
 
-check(
+result += check(
     "cinder",
     "volume",
-    clients["cinder"].volumes.list(search_opts={"all_tenants": True}),
+    cloud.volume.volumes(all_projects=True),
     projects,
 )
-check(
+result += check(
     "cinder",
     "volume-snapshot",
-    clients["cinder"].volume_snapshots.list(search_opts={"all_tenants": True}),
+    cloud.volume.snapshots(all_projects=True),
     projects,
 )
-check(
+result += check(
     "cinder",
     "backups",
-    clients["cinder"].backups.list(search_opts={"all_tenants": True}),
+    cloud.volume.backups(all_projects=True),
     projects,
 )
 
-check("heat", "stack", clients["heat"].stacks.list(), projects)
+print(
+    tabulate(
+        result,
+        headers=["servicename", "resourcename", "resource_id", "project_id"],
+        tablefmt="psql",
+    )
+)
