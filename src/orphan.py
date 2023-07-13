@@ -5,7 +5,7 @@ import openstack
 from oslo_config import cfg
 from tabulate import tabulate
 
-PROJECT_NAME = "openstack-resource-manager"
+PROJECT_NAME = "orphan"
 CONF = cfg.CONF
 opts = [
     cfg.BoolOpt("debug", help="Enable debug logging", default=False),
