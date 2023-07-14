@@ -107,24 +107,29 @@ database = pymysql.connect(
 
 if CONF.loadbalancer:
     load_balancer = cloud.load_balancer.get_load_balancer(CONF.loadbalancer)
-    if load_balancer.provisioning_status != "PENDING_UPDATE":
+    if load_balancer.provisioning_status == "PENDING_UPDATE":
+        result = prompt(f"Reset loadbalancer {CONF.loadbalancer} [yes/no]: ")
+        if result == "yes":
+            logger.info(f"Resetting {load_balancer.name}")
+            reset_load_balancer_provisioning_status(load_balancer)
+
+            logger.info(f"Triggering failover for {load_balancer.name}")
+            cloud.load_balancer.failover_load_balancer(load_balancer.id)
+            sleep(10)  # wait for the octavia API
+            wait_for_amphora_boot(load_balancer.id)
+    elif load_balancer.operating_status == "DEGRADED":
+        result = prompt(f"Reset loadbalancer {CONF.loadbalancer} [yes/no]: ")
+        if result == "yes":
+            logger.info(f"Resetting {load_balancer.name}")
+    else:
+
         logger.error(
-            f"{CONF.loadbalancer} has to be in provisioning_status PENDING_UPDATE"
+            f"{CONF.loadbalancer} has to be in provisioning_status PENDING_UPDATE or in load_balancer.operating_status DEGRADED"
         )
         sys.exit(1)
 
-    result = prompt(f"Reset loadbalancer {CONF.loadbalancer} [yes/no]: ")
-    if result == "yes":
-        logger.info(f"Resetting {load_balancer.name}")
-        reset_load_balancer_provisioning_status(load_balancer)
-
-        logger.info(f"Triggering failover for {load_balancer.name}")
-        cloud.load_balancer.failover_load_balancer(load_balancer.id)
-        sleep(10)  # wait for the octavia API
-        wait_for_amphora_boot(load_balancer.id)
 
 else:
-
     load_balancers = cloud.load_balancer.load_balancers(
         provisioning_status="PENDING_UPDATE"
     )
@@ -142,5 +147,17 @@ else:
             cloud.load_balancer.failover_load_balancer(load_balancer.id)
             sleep(10)  # wait for the octavia API
             wait_for_amphora_boot(load_balancer.id)
+        else:
+            logger.debug(f"Skipping {load_balancer.name}")
+
+    load_balancers = cloud.load_balancer.load_balancers(operating_status="DEGRADED")
+    for load_balancer in load_balancers:
+        logger.info(
+            f"Loadbalancer {load_balancer.name} is in operating status DEGRADED"
+        )
+        result = prompt(f"Reset loadbalancer {load_balancer.name} [yes/no]: ")
+
+        if result == "yes":
+            logger.info(f"Resetting {load_balancer.name}")
         else:
             logger.debug(f"Skipping {load_balancer.name}")
