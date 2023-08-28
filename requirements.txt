@@ -1,4 +1,4 @@
-dynaconf==3.2.1
+dynaconf==3.2.2
 loguru==0.7.0
 openstacksdk==1.4.0
 oslo.config==9.2.0
