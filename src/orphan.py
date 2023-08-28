@@ -4,6 +4,8 @@ from loguru import logger
 import openstack
 from oslo_config import cfg
 from tabulate import tabulate
+from typing import List
+
 
 PROJECT_NAME = "orphan"
 CONF = cfg.CONF
@@ -77,7 +79,7 @@ cloud = openstack.connect(cloud=CONF.cloud)
 
 domains = [x for x in cloud.list_domains() if x.name != "heat_user_domain"]
 
-projects = []
+projects: List[int] = []
 for domain in domains:
     projects_in_domain = [x.id for x in cloud.list_projects(domain_id=domain.id)]
     projects = projects + projects_in_domain
