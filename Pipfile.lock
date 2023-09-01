@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b6086213b371416aa7a5649cde68eaa0f6933ce95c92645975e508467b097f1c"
+            "sha256": "619dbf2ac4629405a2f57559a8c9dee6065a196065d6aa6e3809f31c1c3d5d1e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -626,12 +626,12 @@
         },
         "python-cinderclient": {
             "hashes": [
-                "sha256:9a6aa30feff48c0c0fd188e6d5150dbdd91e3fd5b10d2db9d78b9812ab14af88",
-                "sha256:a670e9a70b3c87f57f7a8e3b0a22ecd692c5fbf326a6b9f724ee6c0675001b3b"
+                "sha256:a53e6470a516627b59d22505222a0c85794be1a7f2774e87796105bd47ee9695",
+                "sha256:d1a2b89bc9e593f9d10924a60d31fb8056930ac1ea3eb01219501e5fb97611d3"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==9.3.0"
+            "version": "==9.4.0"
         },
         "python-dateutil": {
             "hashes": [
