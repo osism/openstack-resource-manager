@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    Abort detach of volume attachment(s) after 2 hours.
