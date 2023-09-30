@@ -36,6 +36,16 @@ logger.add(sys.stderr, format=log_fmt, level=level, colorize=True)
 # Connect to the OpenStack environment
 cloud = openstack.connect(cloud=CONF.cloud)
 
+# detaching
+for volume in cloud.block_storage.volumes(all_projects=True, status="detaching"):
+    duration = datetime.now() - parser.parse(volume.created_at)
+    if duration.total_seconds() > 7200:
+        logger.info(
+            f"Volume {volume.id} hangs in DETACHING status for more than 2 hours"
+        )
+        logger.info(f"Aborting detach of attachment(s) of volume {volume.id}")
+        cloud.block_storage.abort_volume_detaching(volume.id)
+
 # creating
 for volume in cloud.block_storage.volumes(all_projects=True, status="creating"):
     duration = datetime.now() - parser.parse(volume.created_at)
