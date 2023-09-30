@@ -14,6 +14,7 @@ opts = [
     cfg.BoolOpt("restore", help="Restore all amphorae in state ERROR", default=False),
     cfg.BoolOpt("rotate", help="Rotate all amphorae", default=False),
     cfg.StrOpt("cloud", help="Cloud name in clouds.yaml", default="service"),
+    cfg.StrOpt("loadbalancer", help="Loadbalancer ID", default=None),
 ]
 CONF.register_cli_opts(opts)
 CONF(sys.argv[1:], project=PROJECT_NAME)
@@ -76,8 +77,15 @@ def wait_for_amphora_delete(loadbalancer_id):
         sleep(SLEEP_WAIT_FOR_AMPHORA_DELETE)
 
 
-def restore():
-    for amphora in cloud.load_balancer.amphorae(status="ERROR"):
+def restore(loadbalancer_id: str):
+    if loadbalancer_id:
+        result = cloud.load_balancer.amphorae(
+            status="ERROR", loadbalancer_id=loadbalancer_id
+        )
+    else:
+        result = cloud.load_balancer.amphorae(status="ERROR")
+
+    for amphora in result:
         logger.info(
             f"Amphora {amphora.id} of loadbalancer {amphora.loadbalancer_id} is in state ERROR, trigger amphora failover"
         )
@@ -88,9 +96,17 @@ def restore():
         wait_for_amphora_delete(amphora.loadbalancer_id)
 
 
-def rotate():
+def rotate(loadbalancer_id: str):
     done = []
-    for amphora in cloud.load_balancer.amphorae(status="ALLOCATED"):
+
+    if loadbalancer_id:
+        result = cloud.load_balancer.amphorae(
+            status="ALLOCATED", loadbalancer_id=loadbalancer_id
+        )
+    else:
+        result = cloud.load_balancer.amphorae(status="ALLOCATED")
+
+    for amphora in result:
         if amphora.loadbalancer_id in done:
             next
 
@@ -115,8 +131,8 @@ cloud = openstack.connect(cloud=CONF.cloud)
 
 # Restore all amphorae in state ERROR
 if CONF.restore:
-    restore()
+    restore(CONF.loadbalancer)
 
 # Rotate all amphorae
 if CONF.rotate:
-    rotate()
+    rotate(CONF.loadbalancer)
