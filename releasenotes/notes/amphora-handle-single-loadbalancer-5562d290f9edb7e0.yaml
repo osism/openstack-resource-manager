@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    With the amphora command, it is now possible to handle only one specific
+    load balancer with the optional argument `--loadbalancer ID`.
