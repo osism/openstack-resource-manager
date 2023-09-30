@@ -110,6 +110,10 @@ def rotate():
             pass
 
 
+def orphan():
+    pass
+
+
 # Connect to the OpenStack environment
 cloud = openstack.connect(cloud=CONF.cloud)
 
@@ -120,3 +124,7 @@ if CONF.restore:
 # Rotate all amphorae
 if CONF.rotate:
     rotate()
+
+# Identify orphan amphorae
+if CONF.orphan:
+    orphan()
