@@ -158,6 +158,17 @@ if CONF.loadbalancer and CONF.type == "provisioning_status":
             cloud.load_balancer.failover_load_balancer(load_balancer.id)
             sleep(10)  # wait for the octavia API
             wait_for_amphora_boot(load_balancer.id)
+
+    # This only works when there is at least on working amphora. Therefore, this is only useful
+    # if the load balancer ID is explicitly specified.
+    elif load_balancer.provisioning_status == "ERROR":
+        result = prompt(f"Reset loadbalancer {CONF.loadbalancer} [yes/no]: ")
+        if result == "yes":
+            logger.info(f"Resetting {load_balancer.name}")
+            reset_load_balancer_provisioning_status(load_balancer)
+            cloud.load_balancer.failover_load_balancer(load_balancer.id)
+            sleep(10)  # wait for the octavia API
+            wait_for_amphora_boot(load_balancer.id)
     else:
         logger.error(
             f"{CONF.loadbalancer} has to be in provisioning_status PENDING_UPDATE or PENDING_CREATE"
