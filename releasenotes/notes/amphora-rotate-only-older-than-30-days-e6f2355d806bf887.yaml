@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    By default only rotate ampohrae older than 30 days. Rotation can
+    be forced with the `--force` parameter.
