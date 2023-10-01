@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+from datetime import datetime
 import sys
 from time import sleep
 
+from dateutil import parser
 from loguru import logger
 import openstack
 from oslo_config import cfg
@@ -11,8 +13,9 @@ PROJECT_NAME = "amphora"
 CONF = cfg.CONF
 opts = [
     cfg.BoolOpt("debug", help="Enable debug logging", default=False),
+    cfg.BoolOpt("force", help="Force rotation of amphorae", default=False),
     cfg.BoolOpt("restore", help="Restore all amphorae in state ERROR", default=False),
-    cfg.BoolOpt("rotate", help="Rotate all amphorae", default=False),
+    cfg.BoolOpt("rotate", help="Rotate all amphorae older than 30 days", default=False),
     cfg.StrOpt("cloud", help="Cloud name in clouds.yaml", default="service"),
     cfg.StrOpt("loadbalancer", help="Loadbalancer ID", default=None),
 ]
@@ -107,7 +110,19 @@ def rotate(loadbalancer_id: str):
         result = cloud.load_balancer.amphorae(status="ALLOCATED")
 
     for amphora in result:
+        rotate = False
+
         if amphora.loadbalancer_id in done:
+            next
+
+        duration = datetime.now() - parser.parse(amphora.created_at)
+        if duration.total_seconds() > 2592000:  # 30 days
+            logger.info(f"Amphora {amphora.id} is older than 30 days")
+            rotate = True
+        elif CONF.force:
+            logger.info(f"Force rotation of Amphora {amphora.id}")
+            rotate = True
+        else:
             next
 
         logger.info(
