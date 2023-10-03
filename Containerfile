@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-FROM python:3.11-alpine
+FROM python:3.12-alpine
 
 COPY requirements.txt /requirements.txt
 COPY src/main.py /usr/local/bin/openstack-resource-manager.py
