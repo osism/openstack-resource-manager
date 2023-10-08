@@ -125,20 +125,20 @@ def rotate(loadbalancer_id: str):
         else:
             next
 
-        logger.info(
-            f"Amphora {amphora.id} of loadbalancer {amphora.loadbalancer_id} is rotated by a loadbalancer failover"
-        )
+        if rotate:
+            logger.info(
+                f"Amphora {amphora.id} of loadbalancer {amphora.loadbalancer_id} is rotated by a loadbalancer failover"
+            )
+            try:
+                cloud.load_balancer.failover_load_balancer(amphora.loadbalancer_id)
+                sleep(10)  # wait for the octavia API
 
-        try:
-            cloud.load_balancer.failover_load_balancer(amphora.loadbalancer_id)
-            sleep(10)  # wait for the octavia API
+                done.append(amphora.loadbalancer_id)
 
-            done.append(amphora.loadbalancer_id)
-
-            wait_for_amphora_boot(amphora.loadbalancer_id)
-            wait_for_amphora_delete(amphora.loadbalancer_id)
-        except openstack.exceptions.ConflictException:
-            pass
+                wait_for_amphora_boot(amphora.loadbalancer_id)
+                wait_for_amphora_delete(amphora.loadbalancer_id)
+            except openstack.exceptions.ConflictException:
+                pass
 
 
 # Connect to the OpenStack environment

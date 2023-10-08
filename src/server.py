@@ -2,7 +2,6 @@
 
 from datetime import datetime
 import sys
-from time import sleep
 
 from dateutil import parser
 from loguru import logger
