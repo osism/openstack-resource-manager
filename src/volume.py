@@ -2,6 +2,7 @@
 
 from datetime import datetime
 import sys
+from time import sleep
 
 from dateutil import parser
 from loguru import logger
@@ -17,6 +18,8 @@ opts = [
 ]
 CONF.register_cli_opts(opts)
 CONF(sys.argv[1:], project=PROJECT_NAME)
+
+SLEEP_WAIT_FOR_API = 2
 
 if CONF.debug:
     level = "DEBUG"
@@ -64,5 +67,21 @@ for volume in cloud.block_storage.volumes(all_projects=True, status="error_delet
     if result == "yes":
         logger.info(f"Deleting volume {volume.id}")
         cloud.block_storage.delete_volume(volume.id, force=True)
+
+# deleting
+for volume in cloud.block_storage.volumes(all_projects=True, status="deleting"):
+    duration = datetime.now() - parser.parse(volume.created_at)
+    if duration.total_seconds() > 7200:
+        logger.info(
+            f"Volume {volume.id} hangs in DELETING status for more than 2 hours"
+        )
+        result = prompt(f"Retry deletion of volume {volume.id} [yes/no]: ")
+        if result == "yes":
+            logger.info(f"Deleting volume {volume.id}")
+            cloud.block_storage.reset_volume_status(
+                volume.id, status="available", attach_status=None, migration_status=None
+            )
+            sleep(SLEEP_WAIT_FOR_API)
+            cloud.block_storage.delete_volume(volume.id, force=True)
 
 # error
