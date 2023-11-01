@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-dynaconf = "==3.2.3"
+dynaconf = "==3.2.4"
 loguru = "==0.7.2"
 openstacksdk = "==2.0.0"
 "oslo.config" = "==9.2.0"
