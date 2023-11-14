@@ -198,7 +198,6 @@ elif not CONF.loadbalancer and CONF.type == "provisioning_status":
             logger.debug(f"Skipping {load_balancer.name}")
 
 elif CONF.loadbalancer and CONF.type == "operating_status":
-
     load_balancer = cloud.load_balancer.get_load_balancer(CONF.loadbalancer)
     if load_balancer.operating_status != "ERROR":
         logger.error(f"{CONF.loadbalancer} has to be in operating_status ERROR")
