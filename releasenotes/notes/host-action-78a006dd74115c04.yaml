@@ -1,0 +1,6 @@
+---
+features:
+  - |
+    With the `host-action` script it is possible to initiate an action on
+    all instances running on a specific host. At the moment the actions
+    `stop` and `live-migrate` are usable.
