@@ -14,6 +14,7 @@ CONF = cfg.CONF
 opts = [
     cfg.BoolOpt("debug", help="Enable debug logging", default=False),
     cfg.BoolOpt("wait", help="Wait for completion of action", default=True),
+    cfg.BoolOpt("yes", help="Always say yes", default=False),
     cfg.StrOpt("action", help="Action", default="list"),
     cfg.StrOpt("cloud", help="Cloud name in clouds.yaml", default="service"),
     cfg.StrOpt("host", help="Compute node", default=""),
@@ -51,6 +52,11 @@ print(
     )
 )
 
+if CONF.yes:
+    answer = "yes"
+else:
+    answer = "no"
+
 if CONF.action:
     if CONF.action == "live-migrate":
         for server in result:
@@ -60,7 +66,11 @@ if CONF.action:
                 )
                 continue
 
-            answer = prompt(f"Live migrate server {server[0]} ({server[1]}) [yes/no]: ")
+            if not CONF.yes:
+                answer = prompt(
+                    f"Live migrate server {server[0]} ({server[1]}) [yes/no]: "
+                )
+
             if answer in ["yes", "y"]:
                 logger.info(f"Live migrating server {server[0]}")
                 cloud.compute.live_migrate_server(
@@ -86,7 +96,10 @@ if CONF.action:
                     f"{server[0]} ({server[1]}) in status {server[2]} cannot be stopped"
                 )
                 continue
-            answer = prompt(f"Stop server {server[0]} ({server[1]}) [yes/no]: ")
+
+            if not CONF.yes:
+                answer = prompt(f"Stop server {server[0]} ({server[1]}) [yes/no]: ")
+
             if answer in ["yes", "y"]:
                 logger.info(f"Stopping server {server[0]}")
                 cloud.compute.stop_server(server[0])
