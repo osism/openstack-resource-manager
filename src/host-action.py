@@ -13,6 +13,7 @@ PROJECT_NAME = "host-action"
 CONF = cfg.CONF
 opts = [
     cfg.BoolOpt("debug", help="Enable debug logging", default=False),
+    cfg.BoolOpt("disable", help="Disable the host", default=False),
     cfg.BoolOpt("wait", help="Wait for completion of action", default=True),
     cfg.BoolOpt("yes", help="Always say yes", default=False),
     cfg.StrOpt("action", help="Action", default="list"),
@@ -58,6 +59,16 @@ else:
     answer = "no"
 
 if CONF.action:
+    if CONF.disable:
+        services = cloud.compute.services(
+            **{"host": CONF.host, "binary": "nova-compute"}
+        )
+        service = next(services)
+        logger.info(f"Disabling nova-compute binary @ {CONF.host} ({service.id})")
+        cloud.compute.disable_service(
+            service=service.id, binary="nova-compute", disabled_reason="MAINTENANCE"
+        )
+
     if CONF.action == "live-migrate":
         for server in result:
             if server[2] not in ["ACTIVE"]:
@@ -103,3 +114,5 @@ if CONF.action:
             if answer in ["yes", "y"]:
                 logger.info(f"Stopping server {server[0]}")
                 cloud.compute.stop_server(server[0])
+    else:
+        logger.error(f"Unknown action {CONF.action}")
