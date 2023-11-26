@@ -66,10 +66,72 @@ if CONF.action:
         service = next(services)
         logger.info(f"Disabling nova-compute binary @ {CONF.host} ({service.id})")
         cloud.compute.disable_service(
-            service=service.id, binary="nova-compute", disabled_reason="MAINTENANCE"
+            service=service.id,
+            host=CONF.host,
+            binary="nova-compute",
+            disabled_reason="MAINTENANCE",
         )
 
-    if CONF.action == "live-migrate":
+    if CONF.action == "evacutate":
+        if not CONF.yes:
+            answer = prompt(f"Evacuate all servers on host {CONF.host} [yes/no]: ")
+
+        start = []
+        if answer in ["yes", "y"]:
+            for server in result:
+                if server[2] not in ["ACTIVE", "SHUTOFF"]:
+                    logger.info(
+                        f"{server[0]} ({server[1]}) in status {server[2]} cannot be evacuated"
+                    )
+                    continue
+                if server[2] in ["ACTIVE"]:
+                    logger.info(f"Stopping server {server[0]}")
+                    start.append(server[0])
+                    cloud.compute.stop_server(server[0])
+                    inner_wait = True
+                    while inner_wait:
+                        time.sleep(2)
+                        s = cloud.compute.get_server(server[0])
+                        if s.status not in ["SHUTOFF"]:
+                            logger.info(
+                                f"Stopping of {server[0]} ({server[1]}) is still in progress"
+                            )
+                            inner_wait = True
+                        else:
+                            inner_wait = False
+
+            services = cloud.compute.services(
+                **{"host": CONF.host, "binary": "nova-compute"}
+            )
+            service = next(services)
+            logger.info(
+                f"Forcing down nova-compute binary @ {CONF.host} ({service.id})"
+            )
+            cloud.compute.update_service_forced_down(
+                service=service.id, host=CONF.host, binary="nova-compute"
+            )
+
+            for server in result:
+                if server[2] in ["SHUTOFF"]:
+                    logger.info(f"Evacuating server {server[0]}")
+                    cloud.compute.evacuate_server(server[0], host=CONF.input)
+
+            for server in start:
+                logger.info(f"Starting server {server}")
+                cloud.compute.start_server(server)
+                inner_wait = True
+                while inner_wait:
+                    time.sleep(2)
+                    s = cloud.compute.get_server(server[0])
+                    if s.status not in ["ACTIVE"]:
+                        logger.info(
+                            f"Starting of {server[0]} ({server[1]}) is still in progress"
+                        )
+                        inner_wait = True
+                    else:
+                        inner_wait = False
+
+    elif CONF.action == "live-migrate":
         for server in result:
             if server[2] not in ["ACTIVE"]:
                 logger.info(
@@ -100,6 +162,7 @@ if CONF.action:
                             inner_wait = True
                         else:
                             inner_wait = False
+
     elif CONF.action == "stop":
         for server in result:
             if server[2] not in ["ACTIVE"]:
