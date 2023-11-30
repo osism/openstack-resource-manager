@@ -72,7 +72,7 @@ if CONF.action:
             disabled_reason="MAINTENANCE",
         )
 
-    if CONF.action == "evacutate":
+    if CONF.action == "evacuate":
         if not CONF.yes:
             answer = prompt(f"Evacuate all servers on host {CONF.host} [yes/no]: ")
 
@@ -86,7 +86,7 @@ if CONF.action:
                     continue
                 if server[2] in ["ACTIVE"]:
                     logger.info(f"Stopping server {server[0]}")
-                    start.append(server[0])
+                    start.append(str(server[0]))
                     cloud.compute.stop_server(server[0])
                     inner_wait = True
                     while inner_wait:
@@ -112,9 +112,12 @@ if CONF.action:
             )
 
             for server in result:
-                if server[2] in ["SHUTOFF"]:
+                if server[2] in ["ACTIVE", "SHUTOFF"]:
                     logger.info(f"Evacuating server {server[0]}")
                     cloud.compute.evacuate_server(server[0], host=CONF.input)
+
+            logger.info("Waiting 60 seconds")
+            time.sleep(60)
 
             for server in start:
                 logger.info(f"Starting server {server}")
