@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from datetime import datetime
+from datetime import datetime, timezone
 import sys
 
 from dateutil import parser
@@ -37,7 +37,7 @@ cloud = openstack.connect(cloud=CONF.cloud)
 
 # build
 for server in cloud.compute.servers(all_projects=True, status="build"):
-    duration = datetime.now() - parser.parse(server.created_at)
+    duration = datetime.now(timezone.utc) - parser.parse(server.created_at)
     if duration.total_seconds() > 7200:
         logger.info(f"Server {server.id} hangs in BUILD status for more than 2 hours")
         result = prompt(f"Delete server {server.id} [yes/no]: ")

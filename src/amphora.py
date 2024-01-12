@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from datetime import datetime
+from datetime import datetime, timezone
 import sys
 from time import sleep
 
@@ -115,7 +115,7 @@ def rotate(loadbalancer_id: str):
         if amphora.loadbalancer_id in done:
             next
 
-        duration = datetime.now() - parser.parse(amphora.created_at)
+        duration = datetime.now(timezone.utc) - parser.parse(amphora.created_at)
         if duration.total_seconds() > 2592000:  # 30 days
             logger.info(f"Amphora {amphora.id} is older than 30 days")
             rotate = True
