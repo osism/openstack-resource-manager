@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from datetime import datetime
+from datetime import datetime, timezone
 import sys
 from time import sleep
 
@@ -40,7 +40,7 @@ cloud = openstack.connect(cloud=CONF.cloud)
 
 # detaching
 for volume in cloud.block_storage.volumes(all_projects=True, status="detaching"):
-    duration = datetime.now() - parser.parse(volume.created_at)
+    duration = datetime.now(timezone.utc) - parser.parse(volume.created_at)
     if duration.total_seconds() > 7200:
         logger.info(
             f"Volume {volume.id} hangs in DETACHING status for more than 2 hours"
@@ -50,7 +50,7 @@ for volume in cloud.block_storage.volumes(all_projects=True, status="detaching")
 
 # creating
 for volume in cloud.block_storage.volumes(all_projects=True, status="creating"):
-    duration = datetime.now() - parser.parse(volume.created_at)
+    duration = datetime.now(timezone.utc) - parser.parse(volume.created_at)
     if duration.total_seconds() > 7200:
         logger.info(
             f"Volume {volume.id} hangs in CREATING status for more than 2 hours"
@@ -70,7 +70,7 @@ for volume in cloud.block_storage.volumes(all_projects=True, status="error_delet
 
 # deleting
 for volume in cloud.block_storage.volumes(all_projects=True, status="deleting"):
-    duration = datetime.now() - parser.parse(volume.created_at)
+    duration = datetime.now(timezone.utc) - parser.parse(volume.created_at)
     if duration.total_seconds() > 7200:
         logger.info(
             f"Volume {volume.id} hangs in DELETING status for more than 2 hours"
