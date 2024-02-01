@@ -104,9 +104,9 @@ def get_wrong_orphan_volume_attachments(nova_instances, orphan_volume_attachment
             nova_instances.get(orphan_volume_attachments[orphan_volume_attachment_id])
             is None
         ):
-            wrong_orphan_volume_attachments[
-                orphan_volume_attachment_id
-            ] = orphan_volume_attachments[orphan_volume_attachment_id]
+            wrong_orphan_volume_attachments[orphan_volume_attachment_id] = (
+                orphan_volume_attachments[orphan_volume_attachment_id]
+            )
 
     return wrong_orphan_volume_attachments
 
