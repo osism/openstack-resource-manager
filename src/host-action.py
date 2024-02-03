@@ -17,7 +17,7 @@ opts = [
     cfg.BoolOpt("enable", help="Enable the host", default=False),
     cfg.BoolOpt("wait", help="Wait for completion of action", default=True),
     cfg.BoolOpt("yes", help="Always say yes", default=False),
-    cfg.StrOpt("action", help="Action", default="list"),
+    cfg.StrOpt("action", help="Action", default=None),
     cfg.StrOpt("cloud", help="Cloud name in clouds.yaml", default="service"),
     cfg.StrOpt("host", help="Compute node", default=""),
     cfg.StrOpt("input", help="Additional input", default=""),
