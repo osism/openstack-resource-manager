@@ -14,6 +14,7 @@ CONF = cfg.CONF
 opts = [
     cfg.BoolOpt("debug", help="Enable debug logging", default=False),
     cfg.BoolOpt("disable", help="Disable the host", default=False),
+    cfg.BoolOpt("enable", help="Enable the host", default=False),
     cfg.BoolOpt("wait", help="Wait for completion of action", default=True),
     cfg.BoolOpt("yes", help="Always say yes", default=False),
     cfg.StrOpt("action", help="Action", default="list"),
@@ -182,3 +183,16 @@ if CONF.action:
                 cloud.compute.stop_server(server[0])
     else:
         logger.error(f"Unknown action {CONF.action}")
+
+else:
+    if CONF.enable:
+        services = cloud.compute.services(
+            **{"host": CONF.host, "binary": "nova-compute"}
+        )
+        service = next(services)
+        logger.info(f"Enabling nova-compute binary @ {CONF.host} ({service.id})")
+        cloud.compute.enable_service(
+            service=service.id,
+            host=CONF.host,
+            binary="nova-compute",
+        )
