@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f3e1cf964ba0328179e2af2ba9f3d4f7065bcadea3ebef9ac7cf3e5b01853bf7"
+            "sha256": "fbb3d009210732053d327c3254625cc576bd3f08f44976b86e042f0671a63542"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -680,12 +680,12 @@
         },
         "python-octaviaclient": {
             "hashes": [
-                "sha256:96488ab87bb4566f2d36a4a17eff97d57d9875e0966a9ae296aeaafbc23788d2",
-                "sha256:cfd5c6483720c1a46485e564ea0828f344b2161f2deae2865a6cda64b5c67bbd"
+                "sha256:0ca45895f3e1b75a58dca53a4bdef78a132134c3cbb6a8cdbd63d9de260a1964",
+                "sha256:c001b107279104ec1d5998360f0569b75c868b97abdca43faa1c91540c1a29ee"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==3.6.0"
+            "version": "==3.7.0"
         },
         "python-openstackclient": {
             "hashes": [
