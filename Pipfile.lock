@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bf1eb01823b89e30f29f63bc7d4709d5f6cdc02aab742f4dccc6d8523e903475"
+            "sha256": "a4135e038c20457e9e9b94883896f54c982e36f29a115e1e3b73d95df2db9cf1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -671,12 +671,12 @@
         },
         "python-novaclient": {
             "hashes": [
-                "sha256:15bce541372b3bc6c4bb95c0a89d7e3f6d7d135d51838c1304b2801a5c0716f1",
-                "sha256:6b6b6ae2c11eb1c108e3af55eaa7211b0fc9199935a229a6ba3e0de514c12b50"
+                "sha256:463dc63b5f14e01ff0ef44b622f1cd0719000df2a721d2ede47219e5327a0dbd",
+                "sha256:e23ee440c0c8eae2b53afa881d30acaec0687fcebad246391ec29b96c543038d"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==18.4.0"
+            "version": "==18.5.0"
         },
         "python-octaviaclient": {
             "hashes": [
