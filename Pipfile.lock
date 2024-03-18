@@ -1,12 +1,10 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e4db0536ff23d59bdb4d679bd8d573aa74c0e6804bb60f2bcb0303151def22b5"
+            "sha256": "b377dcd67baaffaddd03a2c36e8d5255dbd668ecdeee8ea84a6e4da41d0bc132"
         },
         "pipfile-spec": 6,
-        "requires": {
-            "python_version": "3.10"
-        },
+        "requires": {},
         "sources": [
             {
                 "name": "pypi",
@@ -586,13 +584,6 @@
             ],
             "version": "==2.21"
         },
-        "pyinotify": {
-            "hashes": [
-                "sha256:9c998a5d7606ca835065cdabc013ae6c66eb9ea76a00a1e3bc6e0cfe2b4f71f4"
-            ],
-            "markers": "sys_platform != 'win32' and sys_platform != 'darwin' and sys_platform != 'sunos5'",
-            "version": "==0.9.6"
-        },
         "pymysql": {
             "hashes": [
                 "sha256:4f13a7df8bf36a51e81dd9f3605fede45a4878fe02f9236349fd82a3f0612f96",
@@ -754,11 +745,11 @@
         },
         "referencing": {
             "hashes": [
-                "sha256:39240f2ecc770258f28b642dd47fd74bc8b02484de54e1882b74b35ebd779bd5",
-                "sha256:c775fedf74bc0f9189c2a3be1c12fd03e8c23f4d371dce795df44e06c5b412f7"
+                "sha256:5773bd84ef41799a5a8ca72dc34590c041eb01bf9aa02632b4a973fb0181a844",
+                "sha256:d53ae300ceddd3169f1ffa9caf2cb7b769e92657e4fafb23d34b93679116dfd4"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==0.33.0"
+            "version": "==0.34.0"
         },
         "requests": {
             "hashes": [
@@ -1016,14 +1007,6 @@
             "index": "pypi",
             "markers": "python_version >= '3.7'",
             "version": "==0.9.0"
-        },
-        "typing-extensions": {
-            "hashes": [
-                "sha256:69b1a937c3a517342112fb4c6df7e72fc39a38e7891a5730ed4985b5214b5475",
-                "sha256:b0abd7c89e8fb96f98db18d86106ff1d90ab692004eb746cf6eda2682f91b3cb"
-            ],
-            "markers": "python_version < '3.11'",
-            "version": "==4.10.0"
         },
         "tzdata": {
             "hashes": [
