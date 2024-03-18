@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bcdc468ac685e9bc18c8c5e9afaf111a3bfe361a56aa2696a73fb45535c6be66"
+            "sha256": "0a848d6ca2b19cd855a4de14e9b227a2da61ec85c0e4cbb61e2fdf07943f0e76"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -272,12 +272,12 @@
         },
         "dynaconf": {
             "hashes": [
-                "sha256:2e6adebaa587f4df9241a16a4bec3fda521154d26b15f3258fde753a592831b6",
-                "sha256:858f9806fab2409c4f5442614c2605d4c4071d5e5153b0e7f24a225f27465aed"
+                "sha256:12202fc26546851c05d4194c80bee00197e7c2febcb026e502b0863be9cbbdd8",
+                "sha256:42c8d936b32332c4b84e4d4df6dd1626b6ef59c5a94eb60c10cd3c59d6b882f2"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==3.2.4"
+            "version": "==3.2.5"
         },
         "idna": {
             "hashes": [
@@ -687,11 +687,11 @@
         },
         "python-openstackclient": {
             "hashes": [
-                "sha256:12fc19347f6b19bfe2c36f11c7a1841f415a2ee7f18b959413c2121997b84951",
-                "sha256:3ccc7a5a80086675af64e4a1e075baf0169f4a9c3a6eefddfe4043a4974e9804"
+                "sha256:149ce7d3740b7b054ab8257f92b260cdfd8b969ffe8a2215bd3682984387b327",
+                "sha256:bbef1ed34829c41052b2eca26480e29ca1f72be058d1430da5341ec44c4f295c"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==6.5.0"
+            "version": "==6.6.0"
         },
         "pyyaml": {
             "hashes": [
