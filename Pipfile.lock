@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c4b4f220f7284e84b2e05755db39b6e20c226240188361f58b012f6c73f7413c"
+            "sha256": "7afcd22545c09f2804ae7fc04c9e6dc4b3830db2d900982fa8d5c50b28bfca8f"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -514,11 +514,11 @@
         },
         "oslo.log": {
             "hashes": [
-                "sha256:484148512c5db2a8b35c83cd997e9953755fd8bfa8aaf6ee0cc8c7aeb7429210",
-                "sha256:8e9b51cbeae6a3706fd3a1629d78210cd9681b28006e0ebdf8d96c75a77cd35a"
+                "sha256:1f9c23eec0dcd80fb5fda58009136dc3c4593413292f931f7c8ff44810d19239",
+                "sha256:89f0d6fa2cba8281f89b508a7fe49bfb97daaf55c5278187d45a3069971e687f"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==5.5.1"
+            "version": "==6.0.0"
         },
         "oslo.serialization": {
             "hashes": [
@@ -570,12 +570,12 @@
         },
         "prompt-toolkit": {
             "hashes": [
-                "sha256:3527b7af26106cbc65a040bcc84839a3566ec1b051bb0bfe953631e704b0ff7d",
-                "sha256:a11a29cb3bf0a28a387fe5122cdb649816a957cd9261dcedf8c9f1fef33eacf6"
+                "sha256:205a20669633d042d3722a528b8e7cd3f4dbd9e1450935f596c2cc61166762dd",
+                "sha256:c1dfd082c4259964bc8bcce1f8460d9dbeb5d4a37bfc25b8082bc02cd41c8af6"
             ],
             "index": "pypi",
             "markers": "python_full_version >= '3.7.0'",
-            "version": "==3.0.43"
+            "version": "==3.0.44"
         },
         "pycparser": {
             "hashes": [
@@ -584,13 +584,6 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==2.22"
-        },
-        "pyinotify": {
-            "hashes": [
-                "sha256:9c998a5d7606ca835065cdabc013ae6c66eb9ea76a00a1e3bc6e0cfe2b4f71f4"
-            ],
-            "markers": "sys_platform != 'win32' and sys_platform != 'darwin' and sys_platform != 'sunos5'",
-            "version": "==0.9.6"
         },
         "pymysql": {
             "hashes": [
