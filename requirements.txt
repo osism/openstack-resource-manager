@@ -2,7 +2,7 @@ dynaconf==3.2.5
 loguru==0.7.2
 openstacksdk==3.1.0
 oslo.config==9.4.0
-prompt-toolkit==3.0.44
+prompt-toolkit==3.0.45
 pymysql==1.1.1
 python-cinderclient==9.5.0
 python-glanceclient==4.6.0
