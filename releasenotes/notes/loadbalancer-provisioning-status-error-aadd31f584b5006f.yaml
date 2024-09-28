@@ -1,5 +1,0 @@
----
-features:
-  - |
-    Load balancers that are in provisioning status `ERROR` but have at least one
-    active amphora can be reset.
