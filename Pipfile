@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 dynaconf = "==3.2.6"
 loguru = "==0.7.2"
-openstacksdk = "==4.0.0"
+openstacksdk = "==4.1.0"
 "oslo.config" = "==9.6.0"
 prompt-toolkit = "==3.0.48"
 pymysql = "==1.1.1"
