@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "dd6ffd05e201154786564ca5c2851f3f16c676982c270f92cbd162c364d53de0"
+            "sha256": "db7dac01561ff249413df4df11c35ef579a1ee742e8e2d5306efdac059b91afb"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -272,11 +272,11 @@
         },
         "decorator": {
             "hashes": [
-                "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330",
-                "sha256:b8c3f85900b9dc423225913c5aace94729fe1fa9763b38939a95226f02d37186"
+                "sha256:65f266143752f734b0a7cc83c46f4618af75b8c5911b00ccb61d0ac9b6da0360",
+                "sha256:d316bb415a2d9e2d2b3abcc4084c6502fc09240e292cd76a76afc106a1c8e04a"
             ],
-            "markers": "python_version >= '3.5'",
-            "version": "==5.1.1"
+            "markers": "python_version >= '3.8'",
+            "version": "==5.2.1"
         },
         "dogpile.cache": {
             "hashes": [
@@ -353,11 +353,11 @@
         },
         "keystoneauth1": {
             "hashes": [
-                "sha256:71b98835aec72a01f71c5b919c3193dac95342555e89aa35c86d3d86c4ff5f73",
-                "sha256:fb0c66d842d5b964752264fff20b3b4ab73610d66d9b8d20d0dcf796ba09dc43"
+                "sha256:34b870dbbcf806cdb5aec98483b62820a6568d364eca7b1174ca6a8b5a9c77ed",
+                "sha256:fd634febb02708d7ab520495168009f1e119cbda96d3478e66a7d9b5b0146f5d"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==5.9.1"
+            "version": "==5.10.0"
         },
         "loguru": {
             "hashes": [
@@ -448,12 +448,12 @@
         },
         "openstacksdk": {
             "hashes": [
-                "sha256:157b2731b5e3b76db803be3e6ee511815a77d83e7d34da0acbf2248114bdc3be",
-                "sha256:e8d211b12a81a9e76371ae4eddca97561ea1fdb50479f077400cf4472d2ad89c"
+                "sha256:157437563d64f3f6feec1796fbd8552d56277332461778c4dbe76d1828fd31e0",
+                "sha256:a0c8a0c2a1cd4589ce4a9bd812df4d48f538b4bb4b7c4b19ff7b0ef9423a28b0"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.9'",
-            "version": "==4.3.0"
+            "version": "==4.4.0"
         },
         "os-client-config": {
             "hashes": [
@@ -686,11 +686,11 @@
         },
         "python-openstackclient": {
             "hashes": [
-                "sha256:85bb7a86b5046c460aa5be37a692c16d763cf066dceb63bc5c5dec6dada19bcd",
-                "sha256:8df84100e53c8e7246bf07a177357f52d4086e05bcd7805d1a94666f42250e80"
+                "sha256:ce0341beab302ea06933836e6b67b42250902e2487d0ffebb81d9f24f382537e",
+                "sha256:e817e11a01cb2b516fbd99dce45c099c8e41c43d11bb11e6672703a838449d9f"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==7.3.0"
+            "version": "==7.4.0"
         },
         "pyyaml": {
             "hashes": [
@@ -893,11 +893,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:c5afc8f407c626b8313a86e10311dd3f661c6cd9c09d4bf8c15c0e11f9f2b0e6",
-                "sha256:e3982f444617239225d675215d51f6ba05f845d4eec313da4418fdbb56fb27e3"
+                "sha256:4880473a969e5f23f2a2be3646b2dfd84af9028716d398e46192f84bc36900d2",
+                "sha256:558e47c15f1811c1fa7adbd0096669bf76c1d3f433f58324df69f3f5ecac4e8f"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==75.8.0"
+            "version": "==75.8.2"
         },
         "six": {
             "hashes": [
