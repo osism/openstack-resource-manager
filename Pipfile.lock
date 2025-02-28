@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "db7dac01561ff249413df4df11c35ef579a1ee742e8e2d5306efdac059b91afb"
+            "sha256": "56cc852024ba8e83c77ed6f036532842807287dab81f4b29479720586eda1c4a"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -211,11 +211,11 @@
         },
         "cliff": {
             "hashes": [
-                "sha256:23eff502e603cf0aa841eaea6662a42cd3064169162b3e596b20226400e34dfd",
-                "sha256:31d761e73920f3260a40f52ba629d7beef6a631b9ad2d039dd4b9fc738760de4"
+                "sha256:735c922eda0817e2cc8e866000c04436efb40316aae490906ffa670560c8dbe1",
+                "sha256:b821d5cb99b62d04235cfdc6434819e17c11d48de06a618290c9e5344fb33972"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==4.8.0"
+            "version": "==4.9.0"
         },
         "cmd2": {
             "hashes": [
@@ -551,11 +551,11 @@
         },
         "prettytable": {
             "hashes": [
-                "sha256:61d5c68f04a94acc73c7aac64f0f380f5bed4d2959d59edc6e4cbb7a0e7b55c4",
-                "sha256:b804b8d51db23959b96b329094debdbbdf10c8c3aa75958c5988cfd7f78501dd"
+                "sha256:1bb0da7437e904ec879d2998aded19abc722719aa3d384a7faa44dcbe4aeb2e9",
+                "sha256:f0edb38060cb9161b2417939bfd5cd9877da73388fb19d1e8bf7987e8558896e"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==3.14.0"
+            "version": "==3.15.1"
         },
         "prompt-toolkit": {
             "hashes": [
@@ -677,12 +677,12 @@
         },
         "python-octaviaclient": {
             "hashes": [
-                "sha256:05388245bcd26693046e809ac375917fceb7824407b6822047fd3c4cd3fa8952",
-                "sha256:71745e3887e00b9171e604f4bc5fe957b43012e0b661f9d6e0e13e9bb9eaaf6d"
+                "sha256:db2667b8f7611b27c48d2e5b2d76d18e197fbfe990cb2cd896fde06f3b4d6228",
+                "sha256:db307b4149ffaae43b023abd956498ab2da853a83777dfb9b6988cc83591c8c4"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.8'",
-            "version": "==3.9.0"
+            "markers": "python_version >= '3.9'",
+            "version": "==3.10.0"
         },
         "python-openstackclient": {
             "hashes": [
