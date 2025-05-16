@@ -1,7 +1,7 @@
 dynaconf==3.2.11
 loguru==0.7.3
 openstacksdk==4.5.0
-oslo.config==9.7.1
+oslo.config==9.8.0
 prompt-toolkit==3.0.51
 pymysql==1.1.1
 python-cinderclient==9.7.0
